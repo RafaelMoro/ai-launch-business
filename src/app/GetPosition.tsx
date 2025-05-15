@@ -1,10 +1,10 @@
 'use client'
 import { useState, useEffect } from "react";
-export default function HomeComp() {
+export default function GetPosition() {
   const [permissionGeo, setGeoPermission] = useState<string | null>(null);
   const showPosition = (position: any) => {
-    console.log(position.coords.latitude);
-    console.log(position.coords.longitude);
+    console.log('latitude ', position.coords.latitude);
+    console.log('longitude ', position.coords.longitude);
   }
 
   const getLocation = () => {
