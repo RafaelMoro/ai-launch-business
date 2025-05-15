@@ -10,14 +10,11 @@ export default function HomeComp() {
   const getLocation = () => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(showPosition);
-    } else {
-      console.log("Geolocation is not supported by this browser.");
     }
   }
 
   useEffect(() => {
     navigator.permissions.query({ name: 'geolocation' }).then((permission) => {
-      console.log('permission', permission);
       if (permission.state === 'prompt') {
         setGeoPermission('prompt');
       }
