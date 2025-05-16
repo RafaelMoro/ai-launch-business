@@ -7,6 +7,7 @@ import classNames from "classnames"
 import { GetBusinessPlanData } from "./interface"
 import { backendUri } from "./constants"
 import Loader from "./components/Loader"
+import { addToLocalStorage } from "./utils/addInfoLocalStorage"
 
 interface UserFormProps {
   addBusinessPlan: (data: GetBusinessPlanData) => void;
@@ -22,9 +23,13 @@ export default function UserForm({ businessIdea, addBusinessPlan, resetBusinessI
       return axios.post(`${backendUri}/business-plan`, data)
     },
     onSuccess: (response) => {
+      // Save data in local storage
+      const data = { idea: businessIdea }
+      addToLocalStorage({ newInfo: data, prop: 'businessIdea' })
       const newData = response.data.data as GetBusinessPlanData
       addBusinessPlan(newData)
       resetBusinessIdea() // Clear form after successful submission
+      addToLocalStorage({ newInfo: newData, prop: 'businessPlan' })
     }
   })
 

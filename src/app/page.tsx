@@ -1,5 +1,5 @@
 'use client'
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   QueryClient,
   QueryClientProvider,
@@ -7,8 +7,11 @@ import {
 
 import GetPosition from "./GetPosition";
 import UserForm from "./UserForm";
-import { GetBusinessPlanData } from "./interface";
+import { Competitors, Emprende25LocalStorage, GeolocationInfo, GetBusinessPlanData } from "./interface";
 import ShowBusinessPlan from "./components/ShowBusinessPlan";
+import CompetitorsInfo from "./components/CompetitorsInfo";
+import { getLocalStorageInfo } from "./utils/getLocalStorageInfo";
+import RemoveCompetitors from "./components/RemoveCompetitors";
 
 const queryClient = new QueryClient()
 
@@ -17,14 +20,52 @@ export default function Home() {
   const [latitude, setLatitude] = useState<number | null>(null);
   const [longitude, setLongitude] = useState<number | null>(null);
   const [businessPlan, setBusinessPlan] = useState<GetBusinessPlanData | null>(null);
+  const [locationInfo, setLocationInfo] = useState<GeolocationInfo | null>(null)
+  const [competitors, setCompetitors] = useState<Competitors[]>([])
 
   const addBusinessPlan = (data: GetBusinessPlanData) => {
     setBusinessPlan(data);
   };
+  const addLocationInfo = (data: GeolocationInfo) => setLocationInfo(data);
   const addLatitude = (lat: number) => setLatitude(lat);
   const addLongitude = (long: number) => setLongitude(long);
   const updateBusinessIdea = (idea: string) => setBusinessIdea(idea);
   const resetBusinessIdea = () => setBusinessIdea("");
+  const addCompetitors = (data: Competitors[]) => setCompetitors(data);
+
+  // Set local storage
+  useEffect(() => {
+    const localStorageInfo: Emprende25LocalStorage = getLocalStorageInfo();
+    const IsEmptyLocalStorage = Object.keys(localStorageInfo).length < 1;
+
+    if (IsEmptyLocalStorage) {
+      return;
+    }
+
+    const {
+      geoLocationCoords: { latitude, longitude },
+      businessPlan,
+      businessIdea,
+      geoLocationInfo,
+      competitors
+    } = localStorageInfo;
+    if (latitude && longitude) {
+      addLatitude(Number(latitude))
+      addLongitude(Number(longitude))
+    }
+    if (businessPlan) {
+      addBusinessPlan(businessPlan)
+    }
+    if (businessIdea) {
+      updateBusinessIdea(businessIdea.idea)
+    }
+    if (geoLocationInfo) {
+      addLocationInfo(geoLocationInfo)
+    }
+    if (competitors) {
+      addCompetitors(competitors)
+    }
+  }, [])
 
   return (
     <QueryClientProvider client={queryClient}>
@@ -41,6 +82,18 @@ export default function Home() {
         { businessPlan && (
           <ShowBusinessPlan businessPlan={businessPlan} />
         )}
+        { businessPlan && (
+          <CompetitorsInfo
+            businessIdea={businessIdea}
+            latitude={latitude}
+            longitude={longitude}
+            locationInfo={locationInfo}
+            competitors={competitors}
+            addLocationInfo={addLocationInfo}
+            addCompetitors={addCompetitors}
+          />
+        )}
+        {/* <RemoveCompetitors /> */}
       </main>
     </QueryClientProvider>
   );

@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import classNames from "classnames"
 import { IconLocation } from "@tabler/icons-react"; 
 import { GeoPosition } from "./interface";
+import { addToLocalStorage } from "./utils/addInfoLocalStorage";
 
 interface GetPositionProps {
   addLatitude: (lat: number) => void;
@@ -13,8 +14,17 @@ export default function GetPosition({ addLatitude, addLongitude }: GetPositionPr
   const [permissionGeo, setGeoPermission] = useState<GeoPosition | null>(null);
 
   const showPosition = (position: any) => {
-    addLatitude(position.coords.latitude);
-    addLongitude(position.coords.longitude);
+    const newLat = position.coords.latitude as number;
+    const newLong = position.coords.longitude as number;
+    addLatitude(newLat);
+    addLongitude(newLong);
+    setGeoPermission('granted')
+
+    const localStorageInfo = {
+      latitude: String(newLat),
+      longitude: String(newLong)
+    }
+    addToLocalStorage({ newInfo: localStorageInfo, prop: 'geoLocationCoords' })
   }
 
   const buttonCssClasses = classNames(
@@ -36,6 +46,11 @@ export default function GetPosition({ addLatitude, addLongitude }: GetPositionPr
       }
       if (permission.state === 'denied') {
         setGeoPermission('denied');
+        const localStorageInfo = {
+          latitude: null,
+          longitude: null
+        }
+        addToLocalStorage({ newInfo: localStorageInfo, prop: 'geoLocationCoords' })
       }
       if (permission.state === 'granted') {
         setGeoPermission('granted');
