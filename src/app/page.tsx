@@ -1,5 +1,5 @@
 'use client'
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   QueryClient,
   QueryClientProvider,
@@ -7,9 +7,10 @@ import {
 
 import GetPosition from "./GetPosition";
 import UserForm from "./UserForm";
-import { GetBusinessPlanData } from "./interface";
+import { Emprende25LocalStorage, GeolocationInfo, GetBusinessPlanData } from "./interface";
 import ShowBusinessPlan from "./components/ShowBusinessPlan";
 import CompetitorsInfo from "./components/CompetitorsInfo";
+import { getLocalStorageInfo } from "./utils/getLocalStorageInfo";
 
 const queryClient = new QueryClient()
 
@@ -18,14 +19,34 @@ export default function Home() {
   const [latitude, setLatitude] = useState<number | null>(null);
   const [longitude, setLongitude] = useState<number | null>(null);
   const [businessPlan, setBusinessPlan] = useState<GetBusinessPlanData | null>(null);
+  const [locationInfo, setLocationInfo] = useState<GeolocationInfo | null>(null)
+  console.log('locationInfo', locationInfo)
 
   const addBusinessPlan = (data: GetBusinessPlanData) => {
     setBusinessPlan(data);
   };
+  const addLocationInfo = (data: GeolocationInfo) => setLocationInfo(data);
   const addLatitude = (lat: number) => setLatitude(lat);
   const addLongitude = (long: number) => setLongitude(long);
   const updateBusinessIdea = (idea: string) => setBusinessIdea(idea);
   const resetBusinessIdea = () => setBusinessIdea("");
+
+  // Set local storage
+  useEffect(() => {
+    const localStorageInfo: Emprende25LocalStorage = getLocalStorageInfo();
+    const IsEmptyLocalStorage = Object.keys(localStorageInfo).length < 1;
+
+    if (IsEmptyLocalStorage) {
+      return;
+    }
+
+    const { geoLocationCoords: { latitude, longitude } } = localStorageInfo;
+    if (latitude && longitude) {
+      addLatitude(latitude)
+      addLongitude(longitude)
+    }
+
+  }, [])
 
   return (
     <QueryClientProvider client={queryClient}>
@@ -43,7 +64,12 @@ export default function Home() {
           <ShowBusinessPlan businessPlan={businessPlan} />
         )}
         { businessPlan && (
-          <CompetitorsInfo latitude={latitude} longitude={longitude} />
+          <CompetitorsInfo
+            latitude={latitude}
+            longitude={longitude}
+            locationInfo={locationInfo}
+            addLocationInfo={addLocationInfo}
+          />
         )}
       </main>
     </QueryClientProvider>
