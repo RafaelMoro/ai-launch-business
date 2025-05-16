@@ -46,7 +46,7 @@ export default function CompetitorsInfo({
         Información de Competencia
       </h4>
       <p className="text-lg text-gray-900 dark:text-white text-pretty">
-        Aquí puedes encontrar información sobre la competencia en tu área y cómo diferenciarte de ellos.
+        Aquí puedes encontrar información sobre la competencia en tu área y cómo diferenciarte de ellos. Vamos a usar tu ubicación para obtener solamente información del estado de la República y país donde te encuentras.
       </p>
       { (isIdleLocation || isPendingLocation) && (
         <button
@@ -57,6 +57,7 @@ export default function CompetitorsInfo({
             { isPendingLocation && (<Loader />)}
           </button>
       )}
+      { isErrorLocation && (<p>Oops! Parece que hubo un error obteniendo la información sobre tu país y estado de la República. Por favor intente más tarde</p>) }
     </section>
   )
 }
