@@ -4,6 +4,7 @@ import axios from 'axios'
 import { backendUri } from "../constants"
 import { GeolocationInfo } from "../interface"
 import { addToLocalStorage } from "../utils/addInfoLocalStorage"
+import Loader from "./Loader"
 
 interface CompetitorsInfoProps {
   latitude: number | null
@@ -47,12 +48,13 @@ export default function CompetitorsInfo({
       <p className="text-lg text-gray-900 dark:text-white text-pretty">
         Aquí puedes encontrar información sobre la competencia en tu área y cómo diferenciarte de ellos.
       </p>
-      { isIdleLocation && (
+      { (isIdleLocation || isPendingLocation) && (
         <button
           className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800 disabled:opacity-50"
           onClick={handlesubmit}
           >
-            Obtener información
+            { (isIdleLocation) && 'Obtener información' }
+            { isPendingLocation && (<Loader />)}
           </button>
       )}
     </section>
