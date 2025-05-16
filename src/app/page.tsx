@@ -40,7 +40,7 @@ export default function Home() {
       return;
     }
 
-    const { geoLocationCoords: { latitude, longitude }, businessPlan, businessIdea } = localStorageInfo;
+    const { geoLocationCoords: { latitude, longitude }, businessPlan, businessIdea, geoLocationInfo } = localStorageInfo;
     if (latitude && longitude) {
       addLatitude(Number(latitude))
       addLongitude(Number(longitude))
@@ -50,6 +50,9 @@ export default function Home() {
     }
     if (businessIdea) {
       updateBusinessIdea(businessIdea.idea)
+    }
+    if (geoLocationInfo) {
+      addLocationInfo(geoLocationInfo)
     }
 
   }, [])
