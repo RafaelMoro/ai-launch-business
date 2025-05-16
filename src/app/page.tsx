@@ -29,6 +29,7 @@ export default function Home() {
   return (
     <QueryClientProvider client={queryClient}>
       <main className="max-w-7xl mx-auto min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
+        <h1 className="text-4xl font-bold text-gray-900 dark:text-white mb-6 text-center">Aplicación para impulsar tu emprendimiento</h1>
         <GetPosition addLatitude={addLatitude} addLongitude={addLongitude} />
         <UserForm
           addBusinessPlan={addBusinessPlan}
