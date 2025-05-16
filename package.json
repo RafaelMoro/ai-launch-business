@@ -10,7 +10,10 @@
     "postinstall": "flowbite-react patch"
   },
   "dependencies": {
+    "@tabler/icons-react": "^3.31.0",
+    "@tanstack/react-query": "^5.76.1",
     "axios": "^1.9.0",
+    "classnames": "^2.5.1",
     "flowbite-react": "^0.11.7",
     "next": "15.3.2",
     "react": "^19.0.0",
