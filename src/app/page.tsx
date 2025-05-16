@@ -9,6 +9,7 @@ import GetPosition from "./GetPosition";
 import UserForm from "./UserForm";
 import { GetBusinessPlanData } from "./interface";
 import ShowBusinessPlan from "./components/ShowBusinessPlan";
+import CompetitorsInfo from "./components/CompetitorsInfo";
 
 const queryClient = new QueryClient()
 
@@ -40,6 +41,9 @@ export default function Home() {
           />
         { businessPlan && (
           <ShowBusinessPlan businessPlan={businessPlan} />
+        )}
+        { businessPlan && (
+          <CompetitorsInfo />
         )}
       </main>
     </QueryClientProvider>
