@@ -1,9 +1,47 @@
-import Loader from "./Loader"
+import { useMutation } from "@tanstack/react-query"
+import axios from 'axios'
 
-export default function BuyerPersonaInfo() {
-  const isIdle = true
-  const isPending = false
-  const handleGetBuyerPersona = () => {}
+import { backendUri } from "../constants"
+import Loader from "./Loader"
+import { BuyerPersona, GeolocationInfo } from "../interface"
+import { addToLocalStorage } from "../utils/addInfoLocalStorage"
+
+interface BuyerPersonaInfoProps {
+  businessIdea: string
+  locationInfo: GeolocationInfo | null
+  buyerPersonas: BuyerPersona[];
+  addBuyerPersona: (data: BuyerPersona[]) => void
+}
+
+export default function BuyerPersonaInfo({
+  businessIdea,
+  buyerPersonas,
+  locationInfo,
+  addBuyerPersona,
+}: BuyerPersonaInfoProps) {
+  const {
+    mutate,
+    isError,
+    isPending,
+    isIdle
+  } = useMutation({
+    mutationFn: () => {
+      const data = { 
+        business: businessIdea,
+        state: locationInfo?.state ?? '',
+        country: locationInfo?.country ?? ''
+       }
+      return axios.post(`${backendUri}/buyer-persona`, data)
+    },
+    onSuccess: (response) => {
+      const newData = response.data.data as BuyerPersona[]
+      addBuyerPersona(newData)
+      addToLocalStorage({ newInfo: newData, prop: 'buyerPersonas' })
+    }
+  })
+  const handleGetBuyerPersona = () => {
+    mutate()
+  }
 
   return (
     <section className="flex flex-col gap-5">
@@ -14,14 +52,17 @@ export default function BuyerPersonaInfo() {
         Aquí puedes encontrar información sobre la persona ideal ficticia para entender cuál es el público objetivo. Vamos a usar tu ubicación para obtener solamente información del estado de la República y país donde te encuentras.
       </p>
       <div className="w-full flex justify-center">
-        <button
-          className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800 disabled:opacity-50"
-          onClick={handleGetBuyerPersona}
-          >
-            { (isIdle) && 'Obtener buyer personas' }
-            { isPending && (<Loader />)}
+        { ((isIdle || isPending) && buyerPersonas.length === 0) && (
+          <button
+            className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800 disabled:opacity-50"
+            onClick={handleGetBuyerPersona}
+            >
+              { (isIdle) && 'Obtener buyer personas' }
+              { isPending && (<Loader />)}
           </button>
+        )}
       </div>
+      { isError && (<p className="text-lg text-gray-900 dark:text-white text-pretty">Oops! Parece que hubo un error obteniendo los buyer personas. Por favor intente más tarde</p>) }
     </section>
   )
 }
