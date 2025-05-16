@@ -1,11 +1,28 @@
 'use client'
-import { FormEvent } from "react"
+import { FormEvent, useState } from "react"
+import axios from 'axios'
 
 export default function UserForm() {
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+  const [business, setBusiness] = useState("")
+
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
-    console.log('submitted')
+    
+    try {
+      const data = { business }
+      const response = await axios.post('http://localhost:6060/business-plan', data)
+
+      if (!response.data) {
+        console.error('Failed to submit form')
+      }
+
+      console.log('Success:', response.data.data)
+      setBusiness("") // Clear form after successful submission
+    } catch (error) {
+      console.error('Error:', error)
+    }
   }
+
   return (
     <form onSubmit={handleSubmit}>
       <label
@@ -14,6 +31,8 @@ export default function UserForm() {
         >Ingrese su idea de su negocio de manera breve y concisa</label>
       <textarea
         id="message"
+        value={business}
+        onChange={(e) => setBusiness(e.target.value)}
         className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
         placeholder="Ingrese su idea de negocio"></textarea>
 
