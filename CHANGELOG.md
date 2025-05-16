@@ -1,3 +1,9 @@
+## v0.4.0 (2025-05-16)
+
+### Pull Requests
+[#3](https://github.com/RafaelMoro/ai-launch-business/pull/3) | Show competitors
+
+
 ## v0.3.0 (2025-05-16)
 
 ### Pull Requests
