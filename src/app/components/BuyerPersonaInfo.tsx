@@ -5,6 +5,7 @@ import { backendUri } from "../constants"
 import Loader from "./Loader"
 import { BuyerPersona, GeolocationInfo } from "../interface"
 import { addToLocalStorage } from "../utils/addInfoLocalStorage"
+import ShowBuyerPersona from "./ShowBuyerPersona"
 
 interface BuyerPersonaInfoProps {
   businessIdea: string
@@ -63,6 +64,13 @@ export default function BuyerPersonaInfo({
         )}
       </div>
       { isError && (<p className="text-lg text-gray-900 dark:text-white text-pretty">Oops! Parece que hubo un error obteniendo los buyer personas. Por favor intente más tarde</p>) }
+      { buyerPersonas.length > 0 && (
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          { buyerPersonas.map((buyerPersona) => (
+          <ShowBuyerPersona key={buyerPersona.name} buyerPersona={buyerPersona} />
+        ))}
+        </div>
+      )}
     </section>
   )
 }
