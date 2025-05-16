@@ -2,6 +2,7 @@
 import { FormEvent, useState } from "react"
 import axios from 'axios'
 import { GetBusinessPlanData } from "./interface"
+import { backendUri } from "./constants"
 
 interface UserFormProps {
   addBusinessPlan: (data: GetBusinessPlanData) => void
@@ -15,7 +16,7 @@ export default function UserForm({ addBusinessPlan }: UserFormProps) {
     
     try {
       const data = { business }
-      const response = await axios.post('http://localhost:6060/business-plan', data)
+      const response = await axios.post(`${backendUri}/business-plan`, data)
 
       if (!response.data) {
         console.error('Failed to submit form')
