@@ -28,7 +28,7 @@ export default function Home() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
+      <main className="max-w-7xl mx-auto min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
         <GetPosition addLatitude={addLatitude} addLongitude={addLongitude} />
         <UserForm
           addBusinessPlan={addBusinessPlan}
@@ -39,7 +39,7 @@ export default function Home() {
         { businessPlan && (
           <ShowBusinessPlan businessPlan={businessPlan} />
         )}
-      </div>
+      </main>
     </QueryClientProvider>
   );
 }
