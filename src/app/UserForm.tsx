@@ -40,8 +40,11 @@ export default function UserForm({ businessIdea, addBusinessPlan, resetBusinessI
   )
 
   return (
-    <>
-      <form onSubmit={handleSubmit}>
+    <section>
+      <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6 text-center">
+        Genera tu Plan de Negocio con IA
+      </h2>
+      <form className="flex flex-col gap-5" onSubmit={handleSubmit}>
         <label
           htmlFor="message"
           className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
@@ -54,16 +57,18 @@ export default function UserForm({ businessIdea, addBusinessPlan, resetBusinessI
           placeholder="Ingrese su idea de negocio"
           ></textarea>
 
-        <button
-          disabled={isPending || isSuccess}
-          type="submit"
-          className={buttonCssClasses}
-          >
-          { (isIdle || isSuccess) && 'Obtener asesoria' }
-          { isPending && (<Loader />)}
-        </button>
+        <div className="w-full flex justify-center">
+          <button
+            disabled={isPending || isSuccess}
+            type="submit"
+            className={buttonCssClasses}
+            >
+            { (isIdle || isSuccess) && 'Obtener asesoria' }
+            { isPending && (<Loader />)}
+          </button>
+        </div>
       </form>
       { isError && (<p>Oops! Parece que hubo un error. Por favor intente más tarde</p>) }
-    </>
+    </section>
   )
 }
