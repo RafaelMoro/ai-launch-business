@@ -42,8 +42,8 @@ export default function Home() {
 
     const { geoLocationCoords: { latitude, longitude } } = localStorageInfo;
     if (latitude && longitude) {
-      addLatitude(latitude)
-      addLongitude(longitude)
+      addLatitude(Number(latitude))
+      addLongitude(Number(longitude))
     }
 
   }, [])
