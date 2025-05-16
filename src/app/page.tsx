@@ -7,10 +7,11 @@ import {
 
 import GetPosition from "./GetPosition";
 import UserForm from "./UserForm";
-import { Emprende25LocalStorage, GeolocationInfo, GetBusinessPlanData } from "./interface";
+import { Competitors, Emprende25LocalStorage, GeolocationInfo, GetBusinessPlanData } from "./interface";
 import ShowBusinessPlan from "./components/ShowBusinessPlan";
 import CompetitorsInfo from "./components/CompetitorsInfo";
 import { getLocalStorageInfo } from "./utils/getLocalStorageInfo";
+import RemoveCompetitors from "./components/RemoveCompetitors";
 
 const queryClient = new QueryClient()
 
@@ -20,7 +21,7 @@ export default function Home() {
   const [longitude, setLongitude] = useState<number | null>(null);
   const [businessPlan, setBusinessPlan] = useState<GetBusinessPlanData | null>(null);
   const [locationInfo, setLocationInfo] = useState<GeolocationInfo | null>(null)
-  console.log('locationInfo', locationInfo)
+  const [competitors, setCompetitors] = useState<Competitors[]>([])
 
   const addBusinessPlan = (data: GetBusinessPlanData) => {
     setBusinessPlan(data);
@@ -30,6 +31,7 @@ export default function Home() {
   const addLongitude = (long: number) => setLongitude(long);
   const updateBusinessIdea = (idea: string) => setBusinessIdea(idea);
   const resetBusinessIdea = () => setBusinessIdea("");
+  const addCompetitors = (data: Competitors[]) => setCompetitors(data);
 
   // Set local storage
   useEffect(() => {
@@ -40,7 +42,13 @@ export default function Home() {
       return;
     }
 
-    const { geoLocationCoords: { latitude, longitude }, businessPlan, businessIdea, geoLocationInfo } = localStorageInfo;
+    const {
+      geoLocationCoords: { latitude, longitude },
+      businessPlan,
+      businessIdea,
+      geoLocationInfo,
+      competitors
+    } = localStorageInfo;
     if (latitude && longitude) {
       addLatitude(Number(latitude))
       addLongitude(Number(longitude))
@@ -54,7 +62,9 @@ export default function Home() {
     if (geoLocationInfo) {
       addLocationInfo(geoLocationInfo)
     }
-
+    if (competitors) {
+      addCompetitors(competitors)
+    }
   }, [])
 
   return (
@@ -74,12 +84,15 @@ export default function Home() {
         )}
         { businessPlan && (
           <CompetitorsInfo
+            businessIdea={businessIdea}
             latitude={latitude}
             longitude={longitude}
             locationInfo={locationInfo}
             addLocationInfo={addLocationInfo}
+            addCompetitors={addCompetitors}
           />
         )}
+        {/* <RemoveCompetitors /> */}
       </main>
     </QueryClientProvider>
   );
