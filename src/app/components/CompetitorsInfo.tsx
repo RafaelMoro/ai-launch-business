@@ -1,13 +1,21 @@
 import { useMutation } from "@tanstack/react-query"
 import axios from 'axios'
+
 import { backendUri } from "../constants"
+import { GeolocationInfo } from "../interface"
 
 interface CompetitorsInfoProps {
   latitude: number | null
   longitude: number | null
+  locationInfo: GeolocationInfo | null
+  addLocationInfo: (data: GeolocationInfo) => void
 }
 
-export default function CompetitorsInfo({ longitude, latitude }: CompetitorsInfoProps) {
+export default function CompetitorsInfo({
+  longitude,
+  latitude,
+  locationInfo,
+  addLocationInfo }: CompetitorsInfoProps) {
   const {
     mutate: getLocationInfo,
     isError: isErrorLocation,
@@ -20,7 +28,8 @@ export default function CompetitorsInfo({ longitude, latitude }: CompetitorsInfo
       return axios.post(`${backendUri}/state-country`, data)
     },
     onSuccess: (response) => {
-      // TODO: Falta hacer esto
+      const newData = response.data.data as GeolocationInfo
+      addLocationInfo(newData)
     }
   })
 
