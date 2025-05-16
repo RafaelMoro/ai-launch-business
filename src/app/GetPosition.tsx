@@ -18,6 +18,7 @@ export default function GetPosition({ addLatitude, addLongitude }: GetPositionPr
     const newLong = position.coords.longitude as number;
     addLatitude(newLat);
     addLongitude(newLong);
+    setGeoPermission('granted')
 
     const localStorageInfo = {
       latitude: String(newLat),
