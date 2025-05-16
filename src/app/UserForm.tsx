@@ -1,8 +1,13 @@
 'use client'
 import { FormEvent, useState } from "react"
 import axios from 'axios'
+import { GetBusinessPlanData } from "./interface"
 
-export default function UserForm() {
+interface UserFormProps {
+  addBusinessPlan: (data: GetBusinessPlanData) => void
+}
+
+export default function UserForm({ addBusinessPlan }: UserFormProps) {
   const [business, setBusiness] = useState("")
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
@@ -16,7 +21,9 @@ export default function UserForm() {
         console.error('Failed to submit form')
       }
 
-      console.log('Success:', response.data.data)
+      const newData = response.data.data as GetBusinessPlanData
+      console.log('data recieved', newData)
+      addBusinessPlan(newData)
       setBusiness("") // Clear form after successful submission
     } catch (error) {
       console.error('Error:', error)
