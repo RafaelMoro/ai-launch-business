@@ -16,13 +16,14 @@ export interface GetBusinessPlanData {
   possibleRisks: string;
 }
 
-export interface Emprende25LocalStorage {
-  geoLocationCoords: GeoLocationCoords;
-  businessIdea: BusinessIdea;
-  businessPlan: GetBusinessPlanData;
-}
-
 export interface GeolocationInfo {
   state: string;
   country: string;
+}
+
+export interface Emprende25LocalStorage {
+  geoLocationCoords: GeoLocationCoords;
+  geoLocationInfo: GeolocationInfo
+  businessIdea: BusinessIdea;
+  businessPlan: GetBusinessPlanData;
 }
