@@ -40,6 +40,11 @@ export interface BuyerPersona {
   needs: string;
 }
 
+export interface Budget {
+  budget: unknown;
+  considerations: unknown;
+}
+
 // Local storage
 export interface Emprende25LocalStorage {
   geoLocationCoords: GeoLocationCoords;
@@ -48,4 +53,5 @@ export interface Emprende25LocalStorage {
   businessPlan: GetBusinessPlanData;
   competitors: Competitors[];
   buyerPersonas: BuyerPersona[];
+  budget: Budget;
 }
