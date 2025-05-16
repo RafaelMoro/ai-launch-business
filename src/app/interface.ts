@@ -21,9 +21,23 @@ export interface GeolocationInfo {
   country: string;
 }
 
+export interface Competitors {
+  name: string;
+  description: string;
+  website: string;
+  logoDescription: string;
+  competition: string;
+  competitionType: string;
+  competitionSize: string;
+  competitionLocation: string;
+  differenciator: string;
+}
+
+// Local storage
 export interface Emprende25LocalStorage {
   geoLocationCoords: GeoLocationCoords;
   geoLocationInfo: GeolocationInfo
   businessIdea: BusinessIdea;
   businessPlan: GetBusinessPlanData;
+  competitors: Competitors[];
 }
