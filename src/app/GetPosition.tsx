@@ -44,8 +44,8 @@ export default function GetPosition({ addLatitude, addLongitude }: GetPositionPr
   }, [])
 
   return (
-    <section className="flex flex-col lg:flex-row gap-3">
-      <p>Esta aplicación funcionará mejor si podemos obtener acceso a tu ubicación</p>
+    <section className="flex flex-col items-center justify-center gap-3">
+      <p className="text-lg text-gray-900 dark:text-gray-300 text-pretty">Esta aplicación funcionará mejor si podemos obtener acceso a tu ubicación</p>
       <div>
         <button disabled={permissionGeo === 'granted'} className={buttonCssClasses} onClick={getLocation}>
           <IconLocation />
