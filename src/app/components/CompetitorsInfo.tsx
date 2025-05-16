@@ -2,22 +2,28 @@ import { useMutation } from "@tanstack/react-query"
 import axios from 'axios'
 
 import { backendUri } from "../constants"
-import { GeolocationInfo } from "../interface"
+import { Competitors, GeolocationInfo } from "../interface"
 import { addToLocalStorage } from "../utils/addInfoLocalStorage"
 import Loader from "./Loader"
+import { useEffect } from "react"
 
 interface CompetitorsInfoProps {
+  businessIdea: string;
   latitude: number | null
   longitude: number | null
   locationInfo: GeolocationInfo | null
   addLocationInfo: (data: GeolocationInfo) => void
+  addCompetitors: (data: Competitors[]) => void
 }
 
 export default function CompetitorsInfo({
   longitude,
   latitude,
   locationInfo,
-  addLocationInfo }: CompetitorsInfoProps) {
+  businessIdea,
+  addLocationInfo,
+  addCompetitors,
+}: CompetitorsInfoProps) {
   const {
     mutate: getLocationInfo,
     isError: isErrorLocation,
@@ -36,9 +42,40 @@ export default function CompetitorsInfo({
     }
   })
 
-  const handlesubmit = () => {
+  const {
+    mutate: getCompetitors,
+    isError: isErrorCompetitors,
+    isPending: isPendingCompetitors,
+    isSuccess: isSuccessCompetitors,
+    isIdle: isIdleCompetitors
+  } = useMutation({
+    mutationFn: () => {
+      const data = { 
+        business: businessIdea,
+        state: locationInfo?.state ?? '',
+        country: locationInfo?.country ?? ''
+       }
+      return axios.post(`${backendUri}/competition`, data)
+    },
+    onSuccess: (response) => {
+      const newData = response.data.data as Competitors[]
+      addCompetitors(newData)
+      addToLocalStorage({ newInfo: newData, prop: 'competitors' })
+    }
+  })
+
+  const handleGetLocationInfo = () => {
     getLocationInfo()
   }
+  const handleGetCompetitors = () => {
+    getCompetitors()
+  }
+
+  useEffect(() => {
+    if (isSuccessLocation && locationInfo) {
+      getCompetitors()
+    }
+  }, [getCompetitors, locationInfo, isSuccessLocation])
 
   return (
     <section className="flex flex-col gap-5">
@@ -48,16 +85,32 @@ export default function CompetitorsInfo({
       <p className="text-lg text-gray-900 dark:text-white text-pretty">
         Aquí puedes encontrar información sobre la competencia en tu área y cómo diferenciarte de ellos. Vamos a usar tu ubicación para obtener solamente información del estado de la República y país donde te encuentras.
       </p>
-      { (isIdleLocation || isPendingLocation) && (
+
+      { ((isIdleLocation || isPendingLocation) && !locationInfo?.state) && (
         <button
           className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800 disabled:opacity-50"
-          onClick={handlesubmit}
+          onClick={handleGetLocationInfo}
           >
             { (isIdleLocation) && 'Obtener información' }
             { isPendingLocation && (<Loader />)}
           </button>
       )}
-      { isErrorLocation && (<p>Oops! Parece que hubo un error obteniendo la información sobre tu país y estado de la República. Por favor intente más tarde</p>) }
+      { ((isIdleCompetitors || isPendingCompetitors) && locationInfo?.state) && (
+        <button
+          className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800 disabled:opacity-50"
+          onClick={handleGetCompetitors}
+          >
+            { (isIdleCompetitors) && 'Obtener información de mis competidores' }
+            { isPendingCompetitors && (<Loader />)}
+          </button>
+      )}
+      { isErrorLocation && (<p className="text-lg text-gray-900 dark:text-white text-pretty">Oops! Parece que hubo un error obteniendo la información sobre tu país y estado de la República. Por favor intente más tarde</p>) }
+      {  isSuccessLocation && (
+        <>
+          <Loader />
+          <p className="text-lg text-gray-900 dark:text-white text-pretty">Logramos obtener del estado de la Republica y su país. Obteniendo información de sus competidores...</p>
+        </>
+      ) }
     </section>
   )
 }
