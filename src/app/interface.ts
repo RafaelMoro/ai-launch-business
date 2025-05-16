@@ -33,6 +33,13 @@ export interface Competitors {
   differenciator: string;
 }
 
+export interface BuyerPersona {
+  name: string;
+  demographicData: string;
+  behaviorMotivations: string;
+  needs: string;
+}
+
 // Local storage
 export interface Emprende25LocalStorage {
   geoLocationCoords: GeoLocationCoords;
@@ -40,4 +47,5 @@ export interface Emprende25LocalStorage {
   businessIdea: BusinessIdea;
   businessPlan: GetBusinessPlanData;
   competitors: Competitors[];
+  buyerPersonas: BuyerPersona[];
 }

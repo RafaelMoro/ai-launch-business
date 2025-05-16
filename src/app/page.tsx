@@ -7,11 +7,12 @@ import {
 
 import GetPosition from "./GetPosition";
 import UserForm from "./UserForm";
-import { Competitors, Emprende25LocalStorage, GeolocationInfo, GetBusinessPlanData } from "./interface";
+import { BuyerPersona, Competitors, Emprende25LocalStorage, GeolocationInfo, GetBusinessPlanData } from "./interface";
 import ShowBusinessPlan from "./components/ShowBusinessPlan";
 import CompetitorsInfo from "./components/CompetitorsInfo";
 import { getLocalStorageInfo } from "./utils/getLocalStorageInfo";
 import RemoveCompetitors from "./components/RemoveCompetitors";
+import BuyerPersonaInfo from "./components/BuyerPersonaInfo";
 
 const queryClient = new QueryClient()
 
@@ -22,10 +23,14 @@ export default function Home() {
   const [businessPlan, setBusinessPlan] = useState<GetBusinessPlanData | null>(null);
   const [locationInfo, setLocationInfo] = useState<GeolocationInfo | null>(null)
   const [competitors, setCompetitors] = useState<Competitors[]>([])
+  const [buyerPersonas, setBuyerPersonas] = useState<BuyerPersona[]>([])
 
   const addBusinessPlan = (data: GetBusinessPlanData) => {
     setBusinessPlan(data);
   };
+  const addBuyerPersona = (data: BuyerPersona[]) => {
+    setBuyerPersonas(data)
+  }
   const addLocationInfo = (data: GeolocationInfo) => setLocationInfo(data);
   const addLatitude = (lat: number) => setLatitude(lat);
   const addLongitude = (long: number) => setLongitude(long);
@@ -47,7 +52,8 @@ export default function Home() {
       businessPlan,
       businessIdea,
       geoLocationInfo,
-      competitors
+      competitors,
+      buyerPersonas,
     } = localStorageInfo;
     if (latitude && longitude) {
       addLatitude(Number(latitude))
@@ -64,6 +70,9 @@ export default function Home() {
     }
     if (competitors) {
       addCompetitors(competitors)
+    }
+    if (buyerPersonas) {
+      addBuyerPersona(buyerPersonas)
     }
   }, [])
 
@@ -91,6 +100,14 @@ export default function Home() {
             competitors={competitors}
             addLocationInfo={addLocationInfo}
             addCompetitors={addCompetitors}
+          />
+        )}
+        { businessPlan && (
+          <BuyerPersonaInfo
+            businessIdea={businessIdea}
+            locationInfo={locationInfo}
+            buyerPersonas={buyerPersonas}
+            addBuyerPersona={addBuyerPersona}
           />
         )}
         {/* <RemoveCompetitors /> */}
