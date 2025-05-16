@@ -5,6 +5,7 @@ import Loader from "./Loader"
 import { Budget, GeolocationInfo } from "../interface"
 import { backendUri } from "../constants"
 import { addToLocalStorage } from "../utils/addInfoLocalStorage"
+import ShowBudget from "./ShowBudget"
 
 interface GetBudgetInfoProps {
   businessIdea: string
@@ -63,6 +64,9 @@ export default function GetBudgetInfo({
           </div>
         )}
         { isError && (<p className="text-lg text-gray-900 dark:text-white text-pretty">Oops! Parece que hubo un error obteniendo información de tu presupuesto. Por favor intente más tarde</p>) }
+        { budget && (
+          <ShowBudget />
+        )}
     </section>
   )
 }
