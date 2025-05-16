@@ -88,6 +88,7 @@ export default function Home() {
             latitude={latitude}
             longitude={longitude}
             locationInfo={locationInfo}
+            competitors={competitors}
             addLocationInfo={addLocationInfo}
             addCompetitors={addCompetitors}
           />

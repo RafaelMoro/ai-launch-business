@@ -6,12 +6,14 @@ import { Competitors, GeolocationInfo } from "../interface"
 import { addToLocalStorage } from "../utils/addInfoLocalStorage"
 import Loader from "./Loader"
 import { useEffect } from "react"
+import ShowCompetitors from "./ShowCompetitors"
 
 interface CompetitorsInfoProps {
   businessIdea: string;
   latitude: number | null
   longitude: number | null
   locationInfo: GeolocationInfo | null
+  competitors: Competitors[]
   addLocationInfo: (data: GeolocationInfo) => void
   addCompetitors: (data: Competitors[]) => void
 }
@@ -21,6 +23,7 @@ export default function CompetitorsInfo({
   latitude,
   locationInfo,
   businessIdea,
+  competitors,
   addLocationInfo,
   addCompetitors,
 }: CompetitorsInfoProps) {
@@ -111,6 +114,9 @@ export default function CompetitorsInfo({
           <p className="text-lg text-gray-900 dark:text-white text-pretty">Logramos obtener del estado de la Republica y su país. Obteniendo información de sus competidores...</p>
         </>
       ) }
+      { competitors.length > 0 && (
+        <ShowCompetitors />
+      )}
     </section>
   )
 }
