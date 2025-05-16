@@ -2,6 +2,7 @@
 import { FormEvent } from "react"
 import axios from 'axios'
 import { useMutation } from "@tanstack/react-query"
+import classNames from "classnames"
 
 import { GetBusinessPlanData } from "./interface"
 import { backendUri } from "./constants"
@@ -32,6 +33,12 @@ export default function UserForm({ businessIdea, addBusinessPlan, resetBusinessI
     getBusinessPlan()
   }
 
+  const buttonCssClasses = classNames(
+    "text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800 disabled:opacity-50",
+    { "dark:bg-green-500 bg-green-700": isSuccess },
+    { "dark:bg-red-500 bg-red-700": isError }
+  )
+
   return (
     <>
       <form onSubmit={handleSubmit}>
@@ -50,7 +57,7 @@ export default function UserForm({ businessIdea, addBusinessPlan, resetBusinessI
         <button
           disabled={isPending || isSuccess}
           type="submit"
-          className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800 disabled:opacity-50"
+          className={buttonCssClasses}
           >
           { (isIdle || isSuccess) && 'Obtener asesoria' }
           { isPending && (<Loader />)}
