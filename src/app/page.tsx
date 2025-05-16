@@ -7,7 +7,7 @@ import {
 
 import GetPosition from "./GetPosition";
 import UserForm from "./UserForm";
-import { BuyerPersona, Competitors, Emprende25LocalStorage, GeolocationInfo, GetBusinessPlanData } from "./interface";
+import { Budget, BuyerPersona, Competitors, Emprende25LocalStorage, GeolocationInfo, GetBusinessPlanData } from "./interface";
 import ShowBusinessPlan from "./components/ShowBusinessPlan";
 import CompetitorsInfo from "./components/CompetitorsInfo";
 import { getLocalStorageInfo } from "./utils/getLocalStorageInfo";
@@ -25,12 +25,16 @@ export default function Home() {
   const [locationInfo, setLocationInfo] = useState<GeolocationInfo | null>(null)
   const [competitors, setCompetitors] = useState<Competitors[]>([])
   const [buyerPersonas, setBuyerPersonas] = useState<BuyerPersona[]>([])
+  const [budget, setBudget] = useState<Budget | null>(null)
 
   const addBusinessPlan = (data: GetBusinessPlanData) => {
     setBusinessPlan(data);
   };
   const addBuyerPersona = (data: BuyerPersona[]) => {
     setBuyerPersonas(data)
+  }
+  const updateBudget = (data: Budget) => {
+    setBudget(data)
   }
   const addLocationInfo = (data: GeolocationInfo) => setLocationInfo(data);
   const addLatitude = (lat: number) => setLatitude(lat);
@@ -113,6 +117,10 @@ export default function Home() {
         )}
         { businessPlan && (
           <GetBudgetInfo
+            businessIdea={businessIdea}
+            locationInfo={locationInfo}
+            budget={budget}
+            updateBudget={updateBudget}
           />
         )}
         {/* <RemoveCompetitors /> */}
