@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import classNames from "classnames"
 import { IconLocation } from "@tabler/icons-react"; 
 import { GeoPosition } from "./interface";
+import { addToLocalStorage } from "./utils/addInfoLocalStorage";
 
 interface GetPositionProps {
   addLatitude: (lat: number) => void;
@@ -36,6 +37,11 @@ export default function GetPosition({ addLatitude, addLongitude }: GetPositionPr
       }
       if (permission.state === 'denied') {
         setGeoPermission('denied');
+        const localStorageInfo = {
+          latitude: null,
+          longitude: null
+        }
+        addToLocalStorage({ newInfo: localStorageInfo, prop: 'geoLocationCoords' })
       }
       if (permission.state === 'granted') {
         setGeoPermission('granted');
