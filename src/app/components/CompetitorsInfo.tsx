@@ -3,6 +3,7 @@ import axios from 'axios'
 
 import { backendUri } from "../constants"
 import { GeolocationInfo } from "../interface"
+import { addToLocalStorage } from "../utils/addInfoLocalStorage"
 
 interface CompetitorsInfoProps {
   latitude: number | null
@@ -30,6 +31,7 @@ export default function CompetitorsInfo({
     onSuccess: (response) => {
       const newData = response.data.data as GeolocationInfo
       addLocationInfo(newData)
+      addToLocalStorage({ newInfo: newData, prop: 'geoLocationInfo' })
     }
   })
 
