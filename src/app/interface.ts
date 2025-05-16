@@ -40,10 +40,13 @@ export interface BuyerPersona {
   needs: string;
 }
 
+interface BudgetConcept {
+  gasto: string;
+  valor: string;
+}
+
 export interface Budget {
-  budget: {
-    [concept: string]: number;
-  };
+  budget: BudgetConcept[];
   considerations: string;
 }
 
