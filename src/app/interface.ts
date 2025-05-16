@@ -41,8 +41,10 @@ export interface BuyerPersona {
 }
 
 export interface Budget {
-  budget: unknown;
-  considerations: unknown;
+  budget: {
+    [concept: string]: number;
+  };
+  considerations: string;
 }
 
 // Local storage
