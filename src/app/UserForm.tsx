@@ -5,6 +5,7 @@ import { useMutation } from "@tanstack/react-query"
 
 import { GetBusinessPlanData } from "./interface"
 import { backendUri } from "./constants"
+import Loader from "./components/Loader"
 
 interface UserFormProps {
   addBusinessPlan: (data: GetBusinessPlanData) => void;
@@ -52,7 +53,7 @@ export default function UserForm({ businessIdea, addBusinessPlan, resetBusinessI
           className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800 disabled:opacity-50"
           >
           { (isIdle || isSuccess) && 'Obtener asesoria' }
-          { isPending && 'Cargando...'}
+          { isPending && (<Loader />)}
         </button>
       </form>
       { isError && (<p>Oops! Parece que hubo un error. Por favor intente más tarde</p>) }
