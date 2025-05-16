@@ -1,3 +1,9 @@
+## v0.5.0 (2025-05-16)
+
+### Pull Requests
+[#4](https://github.com/RafaelMoro/ai-launch-business/pull/4) | Add buyer persona
+
+
 ## v0.4.0 (2025-05-16)
 
 ### Pull Requests
