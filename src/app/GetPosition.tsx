@@ -1,10 +1,16 @@
 'use client'
 import { useState, useEffect } from "react";
-export default function GetPosition() {
+
+interface GetPositionProps {
+  addLatitude: (lat: number) => void;
+  addLongitude: (long: number) => void;
+}
+
+export default function GetPosition({ addLatitude, addLongitude }: GetPositionProps) {
   const [permissionGeo, setGeoPermission] = useState<string | null>(null);
   const showPosition = (position: any) => {
-    console.log('latitude ', position.coords.latitude);
-    console.log('longitude ', position.coords.longitude);
+    addLatitude(position.coords.latitude);
+    addLongitude(position.coords.longitude);
   }
 
   const getLocation = () => {
