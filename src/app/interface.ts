@@ -1,8 +1,8 @@
 export type GeoPosition = 'granted' | 'denied' | 'prompt';
 
 export interface GeoLocationCoords {
-  latitude: number | null;
-  longitude: number | null;
+  latitude: string | null;
+  longitude: string | null;
 }
 
 export interface Emprende25LocalStorage {
