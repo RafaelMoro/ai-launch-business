@@ -1,6 +1,8 @@
 'use client'
-import { FormEvent } from "react"
+import { FormEvent, useState } from "react"
 import axios from 'axios'
+import { useMutation } from "@tanstack/react-query"
+
 import { GetBusinessPlanData } from "./interface"
 import { backendUri } from "./constants"
 
@@ -12,25 +14,21 @@ interface UserFormProps {
 }
 
 export default function UserForm({ businessIdea, addBusinessPlan, resetBusinessIdea, updateBusinessIdea }: UserFormProps) {
-
-  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault()
-    
-    try {
+  const [buttonText, setButtonText] = useState('Obtener asesoria')
+  const { mutate: getBusinessPlan, isError, isPending, isSuccess } = useMutation({
+    mutationFn: () => {
       const data = { businessIdea }
-      const response = await axios.post(`${backendUri}/business-plan`, data)
-
-      if (!response.data) {
-        console.error('Failed to submit form')
-      }
-
+      return axios.post(`${backendUri}/business-plan`, data)
+    },
+    onSuccess: (response) => {
       const newData = response.data.data as GetBusinessPlanData
-      console.log('data recieved', newData)
       addBusinessPlan(newData)
       resetBusinessIdea() // Clear form after successful submission
-    } catch (error) {
-      console.error('Error:', error)
     }
+  })
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault()
+    getBusinessPlan()
   }
 
   return (
