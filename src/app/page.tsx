@@ -43,7 +43,7 @@ export default function Home() {
           <ShowBusinessPlan businessPlan={businessPlan} />
         )}
         { businessPlan && (
-          <CompetitorsInfo />
+          <CompetitorsInfo latitude={latitude} longitude={longitude} />
         )}
       </main>
     </QueryClientProvider>
