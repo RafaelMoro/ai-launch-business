@@ -44,15 +44,17 @@ export default function GetPosition({ addLatitude, addLongitude }: GetPositionPr
   }, [])
 
   return (
-    <>
+    <section className="flex flex-col lg:flex-row gap-3">
       <p>Esta aplicación funcionará mejor si podemos obtener acceso a tu ubicación</p>
-      <button disabled={permissionGeo === 'granted'} className={buttonCssClasses} onClick={getLocation}>
-        <IconLocation />
-        { permissionGeo === 'prompt' && 'Obtener ubicación' }
-        { permissionGeo === 'granted' && 'Ubicación obtenida'}
-        { permissionGeo === 'denied' && 'Ubicación denegada'}
-      </button>
+      <div>
+        <button disabled={permissionGeo === 'granted'} className={buttonCssClasses} onClick={getLocation}>
+          <IconLocation />
+          { permissionGeo === 'prompt' && 'Obtener ubicación' }
+          { permissionGeo === 'granted' && 'Ubicación obtenida'}
+          { permissionGeo === 'denied' && 'Ubicación denegada'}
+        </button>
+      </div>
       { permissionGeo === 'denied' && (<p>El permiso de la ubicacioón ha sido degenada, por favor autorice para que funcione correctamente</p>)}
-    </>
+    </section>
   )
 }
