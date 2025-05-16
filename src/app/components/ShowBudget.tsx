@@ -40,6 +40,9 @@ export default function ShowBudget({ budget }: ShowBudgetProps) {
           </table>
       </div>
 
+      <p className="text-lg text-gray-900 dark:text-white text-pretty">
+        Consideraciones: {considerations}
+      </p>
     </section>
   )
 }
