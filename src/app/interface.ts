@@ -5,8 +5,8 @@ export interface GeoLocationCoords {
   longitude: string | null;
 }
 
-export interface Emprende25LocalStorage {
-  geoLocationCoords: GeoLocationCoords;
+export interface BusinessIdea {
+  idea: string;
 }
 
 export interface GetBusinessPlanData {
@@ -14,6 +14,12 @@ export interface GetBusinessPlanData {
   inversionPlan: string;
   businessGoals: string;
   possibleRisks: string;
+}
+
+export interface Emprende25LocalStorage {
+  geoLocationCoords: GeoLocationCoords;
+  businessIdea: BusinessIdea;
+  businessPlan: GetBusinessPlanData;
 }
 
 export interface GeolocationInfo {
