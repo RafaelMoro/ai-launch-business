@@ -65,7 +65,7 @@ export default function GetBudgetInfo({
         )}
         { isError && (<p className="text-lg text-gray-900 dark:text-white text-pretty">Oops! Parece que hubo un error obteniendo información de tu presupuesto. Por favor intente más tarde</p>) }
         { budget && (
-          <ShowBudget />
+          <ShowBudget budget={budget} />
         )}
     </section>
   )
