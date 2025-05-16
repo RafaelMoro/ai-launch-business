@@ -1,5 +1,8 @@
 'use client'
 import { useState, useEffect } from "react";
+import classNames from "classnames"
+import { IconLocation } from "@tabler/icons-react"; 
+import { GeoPosition } from "./interface";
 
 interface GetPositionProps {
   addLatitude: (lat: number) => void;
@@ -7,11 +10,18 @@ interface GetPositionProps {
 }
 
 export default function GetPosition({ addLatitude, addLongitude }: GetPositionProps) {
-  const [permissionGeo, setGeoPermission] = useState<string | null>(null);
+  const [permissionGeo, setGeoPermission] = useState<GeoPosition | null>(null);
+
   const showPosition = (position: any) => {
     addLatitude(position.coords.latitude);
     addLongitude(position.coords.longitude);
   }
+
+  const buttonCssClasses = classNames(
+      "inline-flex gap-2 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800 disabled:opacity-50",
+      { "dark:bg-green-500 bg-green-700": permissionGeo === 'granted' },
+      { "dark:bg-red-500 bg-red-700": permissionGeo === 'denied' }
+    )
 
   const getLocation = () => {
     if (navigator.geolocation) {
@@ -36,13 +46,12 @@ export default function GetPosition({ addLatitude, addLongitude }: GetPositionPr
   return (
     <>
       <p>Esta aplicación funcionará mejor si podemos obtener acceso a tu ubicación</p>
-      <button onClick={getLocation}>Obtener ubicación</button>
-      <p>
-        Permiso de ubicación: 
-        {permissionGeo === 'denied' && 'Denegado'}
-        {permissionGeo === 'prompt' && 'Pendiente por solicitar'}
-        {permissionGeo === 'granted' && 'Permitido'}
-      </p>
+      <button disabled={permissionGeo === 'granted'} className={buttonCssClasses} onClick={getLocation}>
+        <IconLocation />
+        { permissionGeo === 'prompt' && 'Obtener ubicación' }
+        { permissionGeo === 'granted' && 'Ubicación obtenida'}
+        { permissionGeo === 'denied' && 'Ubicación denegada'}
+      </button>
       { permissionGeo === 'denied' && (<p>El permiso de la ubicacioón ha sido degenada, por favor autorice para que funcione correctamente</p>)}
     </>
   )
