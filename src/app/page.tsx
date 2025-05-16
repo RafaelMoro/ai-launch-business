@@ -12,6 +12,7 @@ import ShowBusinessPlan from "./components/ShowBusinessPlan";
 import CompetitorsInfo from "./components/CompetitorsInfo";
 import { getLocalStorageInfo } from "./utils/getLocalStorageInfo";
 import RemoveCompetitors from "./components/RemoveCompetitors";
+import BuyerPersonaInfo from "./components/BuyerPersonaInfo";
 
 const queryClient = new QueryClient()
 
@@ -91,6 +92,10 @@ export default function Home() {
             competitors={competitors}
             addLocationInfo={addLocationInfo}
             addCompetitors={addCompetitors}
+          />
+        )}
+        { businessPlan && (
+          <BuyerPersonaInfo
           />
         )}
         {/* <RemoveCompetitors /> */}
