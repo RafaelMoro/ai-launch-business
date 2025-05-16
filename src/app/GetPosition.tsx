@@ -29,7 +29,8 @@ export default function GetPosition() {
 
   return (
     <>
-      <button onClick={getLocation}>Get Position</button>
+      <p>Esta aplicación funcionará mejor si podemos obtener acceso a tu ubicación</p>
+      <button onClick={getLocation}>Obtener ubicación</button>
       <p>
         Permiso de ubicación: 
         {permissionGeo === 'denied' && 'Denegado'}
