@@ -14,8 +14,16 @@ export default function GetPosition({ addLatitude, addLongitude }: GetPositionPr
   const [permissionGeo, setGeoPermission] = useState<GeoPosition | null>(null);
 
   const showPosition = (position: any) => {
-    addLatitude(position.coords.latitude);
-    addLongitude(position.coords.longitude);
+    const newLat = position.coords.latitude as number;
+    const newLong = position.coords.longitude as number;
+    addLatitude(newLat);
+    addLongitude(newLong);
+
+    const localStorageInfo = {
+      latitude: String(newLat),
+      longitude: String(newLong)
+    }
+    addToLocalStorage({ newInfo: localStorageInfo, prop: 'geoLocationCoords' })
   }
 
   const buttonCssClasses = classNames(
