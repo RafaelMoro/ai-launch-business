@@ -115,7 +115,11 @@ export default function CompetitorsInfo({
         </>
       ) }
       { competitors.length > 0 && (
-        <ShowCompetitors />
+        <div className="grid grid-cols-3 gap-4">
+          { competitors.map((competitor) => (
+          <ShowCompetitors key={competitor.name} competitor={competitor} />
+        ))}
+        </div>
       )}
     </section>
   )
