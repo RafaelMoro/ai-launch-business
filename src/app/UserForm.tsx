@@ -40,6 +40,13 @@ export default function UserForm({
       addBusinessPlan(newData)
       resetBusinessIdea() // Clear form after successful submission
       addToLocalStorage({ newInfo: newData, prop: 'businessPlan' })
+
+      setTimeout(() => {
+        const title = document.querySelector('#business-plan-title')
+        if (title) {
+          title.scrollIntoView({ behavior: 'smooth', block: 'start' })
+        }
+      }, 500)
     }
   })
 
