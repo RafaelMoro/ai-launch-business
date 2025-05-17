@@ -63,7 +63,7 @@ export default function UserForm({ businessIdea, addBusinessPlan, resetBusinessI
           placeholder="Ingrese su idea de negocio"
           ></textarea>
 
-        <div className="w-full flex justify-center">
+        <div className="w-full flex flex-col lg:flex-row gap-4 justify-center">
           <button
             disabled={isPending || isSuccess || Boolean(businessPlan)}
             type="submit"
@@ -71,6 +71,12 @@ export default function UserForm({ businessIdea, addBusinessPlan, resetBusinessI
             >
             { (isIdle || isSuccess) && 'Obtener asesoria' }
             { isPending && (<Loader />)}
+          </button>
+          <button
+            disabled={Boolean(businessPlan?.businessGoals) === false}
+            className="text-black bg-blue-200 border border-blue-700 border-solid hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2  focus:outline-none dark:focus:ring-blue-800 disabled:opacity-50"
+            >
+              Buscar otra idea
           </button>
         </div>
       </form>
