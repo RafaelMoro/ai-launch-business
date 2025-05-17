@@ -63,17 +63,20 @@ export default function Home() {
     }
 
     const {
-      geoLocationCoords: { latitude, longitude },
+      geoLocationCoords = { latitude: null, longitude: null },
       businessPlan,
       businessIdea,
       geoLocationInfo,
       competitors,
       buyerPersonas,
     } = localStorageInfo;
-    if (latitude && longitude) {
-      addLatitude(Number(latitude))
-      addLongitude(Number(longitude))
+
+    // Check if geoLocationCoords exists and has valid values
+    if (geoLocationCoords?.latitude && geoLocationCoords?.longitude) {
+      addLatitude(Number(geoLocationCoords.latitude))
+      addLongitude(Number(geoLocationCoords.longitude))
     }
+
     if (businessPlan) {
       addBusinessPlan(businessPlan)
     }
@@ -93,7 +96,7 @@ export default function Home() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <main className="max-w-7xl mx-auto min-h-screen flex flex-col gap-4 p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
+      <main className="max-w-7xl mx-auto min-h-screen flex flex-col p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
         <h1 className="text-4xl font-bold text-gray-900 dark:text-white mb-6 text-center">Emprende 25+</h1>
         <p className="text-xl text-gray-900 dark:text-white text-pretty">Obten toda la información necesaria para comenzar con tu emprendimiento. Para ello, necesitamos contar con tu ubicación para ofrecerte información más precisa.</p>
         <GetPosition addLatitude={addLatitude} addLongitude={addLongitude} />
