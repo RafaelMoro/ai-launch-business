@@ -1,3 +1,9 @@
+## v1.0.3 (2025-05-17)
+
+### Pull Requests
+[#10](https://github.com/RafaelMoro/ai-launch-business/pull/10) | Multiple bug fixes
+
+
 ## v1.0.2 (2025-05-17)
 
 ### Pull Requests
