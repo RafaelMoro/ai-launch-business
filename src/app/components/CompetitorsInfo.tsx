@@ -88,25 +88,29 @@ export default function CompetitorsInfo({
       </p>
 
       { ((isIdleLocation || isPendingLocation) && !locationInfo?.state) && (
-        <button
-          className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800 disabled:opacity-50"
-          onClick={handleGetLocationInfo}
-          >
-            { (isIdleLocation) && 'Obtener información' }
-            { isPendingLocation && (<Loader />)}
-          </button>
+        <div className="w-full flex justify-center">
+          <button
+            className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800 disabled:opacity-50"
+            onClick={handleGetLocationInfo}
+            >
+              { (isIdleLocation) && 'Obtener información' }
+              { isPendingLocation && (<Loader />)}
+            </button>
+        </div>
       )}
-      { ((isIdleCompetitors || isPendingCompetitors) && competitors.length === 0) && (
-        <button
-          className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800 disabled:opacity-50"
-          onClick={handleGetCompetitors}
-          >
-            { (isIdleCompetitors) && 'Obtener información de mis competidores' }
-            { isPendingCompetitors && (<Loader />)}
-          </button>
+      { ((isIdleCompetitors || isPendingCompetitors) && locationInfo?.state && competitors.length === 0) && (
+        <div className="w-full flex justify-center">
+          <button
+            className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800 disabled:opacity-50"
+            onClick={handleGetCompetitors}
+            >
+              { (isIdleCompetitors) && 'Obtener información de mis competidores' }
+              { isPendingCompetitors && (<Loader />)}
+            </button>
+        </div>
       )}
       { isErrorLocation && (<p className="text-lg text-gray-900 dark:text-white text-pretty">Oops! Parece que hubo un error obteniendo la información sobre tu país y estado de la República. Por favor intente más tarde</p>) }
-      {  isSuccessLocation && (
+      {  isSuccessLocation && competitors.length === 0 && (
         <>
           <Loader />
           <p className="text-lg text-gray-900 dark:text-white text-pretty">Logramos obtener del estado de la Republica y su país. Obteniendo información de sus competidores...</p>
