@@ -15,14 +15,12 @@ interface UserFormProps {
   businessIdea: string;
   businessPlan: GetBusinessPlanData | null;
   updateBusinessIdea: (idea: string) => void;
-  resetBusinessIdea: () => void;
   resetAllData: () => void;
 }
 
 export default function UserForm({ 
   businessIdea, 
   addBusinessPlan, 
-  resetBusinessIdea, 
   updateBusinessIdea, 
   businessPlan,
   resetAllData 
@@ -38,8 +36,14 @@ export default function UserForm({
       addToLocalStorage({ newInfo: data, prop: 'businessIdea' })
       const newData = response.data.data as GetBusinessPlanData
       addBusinessPlan(newData)
-      resetBusinessIdea() // Clear form after successful submission
       addToLocalStorage({ newInfo: newData, prop: 'businessPlan' })
+
+      setTimeout(() => {
+        const title = document.querySelector('#business-plan-title')
+        if (title) {
+          title.scrollIntoView({ behavior: 'smooth', block: 'start' })
+        }
+      }, 500)
     }
   })
 
@@ -79,7 +83,7 @@ export default function UserForm({
           placeholder="Ingrese su idea de negocio"
           ></textarea>
 
-        <div className="w-full flex flex-col lg:flex-row gap-4 justify-center">
+        <div className="w-full flex flex-col md:flex-row gap-4 justify-center">
           <button
             disabled={isPending || isSuccess || Boolean(businessPlan)}
             type="submit"
