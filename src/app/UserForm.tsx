@@ -38,7 +38,6 @@ export default function UserForm({
       addToLocalStorage({ newInfo: data, prop: 'businessIdea' })
       const newData = response.data.data as GetBusinessPlanData
       addBusinessPlan(newData)
-      resetBusinessIdea() // Clear form after successful submission
       addToLocalStorage({ newInfo: newData, prop: 'businessPlan' })
 
       setTimeout(() => {
