@@ -16,9 +16,6 @@ export default function GetPosition({ addLatitude, addLongitude, latitude, longi
   const [permissionGeo, setGeoPermission] = useState<GeoPosition | null>(null);
   const existLatitude = latitude !== null;
   const existLongitude = longitude !== null;
-  console.log('longitude', longitude)
-  console.log('latitude', latitude)
-  console.log('permissionGeo', permissionGeo)
 
   const showPosition = (position: GeolocationPosition) => {
     const newLat = position.coords.latitude as number;
