@@ -7,12 +7,12 @@ import {
 
 import GetPosition from "./GetPosition";
 import UserForm from "./UserForm";
-import { BuyerPersona, Competitors, Emprende25LocalStorage, GeolocationInfo, GetBusinessPlanData } from "./interface";
+import { Budget, BuyerPersona, Competitors, Emprende25LocalStorage, GeolocationInfo, GetBusinessPlanData } from "./interface";
 import ShowBusinessPlan from "./components/ShowBusinessPlan";
 import CompetitorsInfo from "./components/CompetitorsInfo";
 import { getLocalStorageInfo } from "./utils/getLocalStorageInfo";
-import RemoveCompetitors from "./components/RemoveCompetitors";
 import BuyerPersonaInfo from "./components/BuyerPersonaInfo";
+import GetBudgetInfo from "./components/GetBudgetInfo";
 
 const queryClient = new QueryClient()
 
@@ -24,6 +24,7 @@ export default function Home() {
   const [locationInfo, setLocationInfo] = useState<GeolocationInfo | null>(null)
   const [competitors, setCompetitors] = useState<Competitors[]>([])
   const [buyerPersonas, setBuyerPersonas] = useState<BuyerPersona[]>([])
+  const [budget, setBudget] = useState<Budget | null>(null)
 
   const addBusinessPlan = (data: GetBusinessPlanData) => {
     setBusinessPlan(data);
@@ -31,12 +32,26 @@ export default function Home() {
   const addBuyerPersona = (data: BuyerPersona[]) => {
     setBuyerPersonas(data)
   }
+  const updateBudget = (data: Budget) => {
+    setBudget(data)
+  }
   const addLocationInfo = (data: GeolocationInfo) => setLocationInfo(data);
   const addLatitude = (lat: number) => setLatitude(lat);
   const addLongitude = (long: number) => setLongitude(long);
   const updateBusinessIdea = (idea: string) => setBusinessIdea(idea);
   const resetBusinessIdea = () => setBusinessIdea("");
   const addCompetitors = (data: Competitors[]) => setCompetitors(data);
+
+  const resetAllData = () => {
+    setBusinessIdea("");
+    setLatitude(null);
+    setLongitude(null);
+    setBusinessPlan(null);
+    setLocationInfo(null);
+    setCompetitors([]);
+    setBuyerPersonas([]);
+    setBudget(null);
+  };
 
   // Set local storage
   useEffect(() => {
@@ -87,6 +102,8 @@ export default function Home() {
           businessIdea={businessIdea}
           updateBusinessIdea={updateBusinessIdea}
           resetBusinessIdea={resetBusinessIdea}
+          businessPlan={businessPlan}
+          resetAllData={resetAllData}
           />
         { businessPlan && (
           <ShowBusinessPlan businessPlan={businessPlan} />
@@ -110,7 +127,14 @@ export default function Home() {
             addBuyerPersona={addBuyerPersona}
           />
         )}
-        {/* <RemoveCompetitors /> */}
+        { businessPlan && (
+          <GetBudgetInfo
+            businessIdea={businessIdea}
+            locationInfo={locationInfo}
+            budget={budget}
+            updateBudget={updateBudget}
+          />
+        )}
       </main>
     </QueryClientProvider>
   );
