@@ -99,7 +99,7 @@ export default function Home() {
       <main className="max-w-7xl mx-auto min-h-screen flex flex-col p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
         <h1 className="text-4xl font-bold text-gray-900 dark:text-white mb-6 text-center">Emprende 25+</h1>
         <p className="text-xl text-gray-900 dark:text-white text-pretty">Obten toda la información necesaria para comenzar con tu emprendimiento. Para ello, necesitamos contar con tu ubicación para ofrecerte información más precisa.</p>
-        <GetPosition addLatitude={addLatitude} addLongitude={addLongitude} />
+        <GetPosition longitude={longitude} latitude={latitude} addLatitude={addLatitude} addLongitude={addLongitude} />
         <UserForm
           addBusinessPlan={addBusinessPlan}
           businessIdea={businessIdea}
