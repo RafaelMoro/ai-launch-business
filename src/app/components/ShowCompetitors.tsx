@@ -1,3 +1,5 @@
+
+'use client'
 import { Competitors } from "../interface"
 
 interface ShowCompetitorsProps {
@@ -11,8 +13,9 @@ export default function ShowCompetitors({ competitor }: ShowCompetitorsProps) {
   return (
     <article>
       <a
-        href={link}
-        target="_blank"
+        href={`https://${link}`}
+        target={"_blank"}
+        rel={"noreferrer"}
         className="block max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow-sm hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700"
         >
 
