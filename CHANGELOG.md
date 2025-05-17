@@ -1,3 +1,9 @@
+## v1.0.0 (2025-05-17)
+
+### Pull Requests
+[#5](https://github.com/RafaelMoro/ai-launch-business/pull/5) | Add initial budget feature and change readme
+
+
 ## v0.5.0 (2025-05-16)
 
 ### Pull Requests
