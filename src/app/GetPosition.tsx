@@ -13,7 +13,7 @@ interface GetPositionProps {
 export default function GetPosition({ addLatitude, addLongitude }: GetPositionProps) {
   const [permissionGeo, setGeoPermission] = useState<GeoPosition | null>(null);
 
-  const showPosition = (position: any) => {
+  const showPosition = (position: GeolocationPosition) => {
     const newLat = position.coords.latitude as number;
     const newLong = position.coords.longitude as number;
     addLatitude(newLat);

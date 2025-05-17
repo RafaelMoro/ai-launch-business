@@ -47,9 +47,7 @@ export default function CompetitorsInfo({
 
   const {
     mutate: getCompetitors,
-    isError: isErrorCompetitors,
     isPending: isPendingCompetitors,
-    isSuccess: isSuccessCompetitors,
     isIdle: isIdleCompetitors
   } = useMutation({
     mutationFn: () => {
