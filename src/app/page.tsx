@@ -11,7 +11,6 @@ import { Budget, BuyerPersona, Competitors, Emprende25LocalStorage, GeolocationI
 import ShowBusinessPlan from "./components/ShowBusinessPlan";
 import CompetitorsInfo from "./components/CompetitorsInfo";
 import { getLocalStorageInfo } from "./utils/getLocalStorageInfo";
-import RemoveCompetitors from "./components/RemoveCompetitors";
 import BuyerPersonaInfo from "./components/BuyerPersonaInfo";
 import GetBudgetInfo from "./components/GetBudgetInfo";
 
@@ -42,6 +41,17 @@ export default function Home() {
   const updateBusinessIdea = (idea: string) => setBusinessIdea(idea);
   const resetBusinessIdea = () => setBusinessIdea("");
   const addCompetitors = (data: Competitors[]) => setCompetitors(data);
+
+  const resetAllData = () => {
+    setBusinessIdea("");
+    setLatitude(null);
+    setLongitude(null);
+    setBusinessPlan(null);
+    setLocationInfo(null);
+    setCompetitors([]);
+    setBuyerPersonas([]);
+    setBudget(null);
+  };
 
   // Set local storage
   useEffect(() => {
@@ -93,6 +103,7 @@ export default function Home() {
           updateBusinessIdea={updateBusinessIdea}
           resetBusinessIdea={resetBusinessIdea}
           businessPlan={businessPlan}
+          resetAllData={resetAllData}
           />
         { businessPlan && (
           <ShowBusinessPlan businessPlan={businessPlan} />
@@ -124,7 +135,6 @@ export default function Home() {
             updateBudget={updateBudget}
           />
         )}
-        {/* <RemoveCompetitors /> */}
       </main>
     </QueryClientProvider>
   );
