@@ -79,7 +79,7 @@ export default function UserForm({
           placeholder="Ingrese su idea de negocio"
           ></textarea>
 
-        <div className="w-full flex flex-col lg:flex-row gap-4 justify-center">
+        <div className="w-full flex flex-col md:flex-row gap-4 justify-center">
           <button
             disabled={isPending || isSuccess || Boolean(businessPlan)}
             type="submit"
