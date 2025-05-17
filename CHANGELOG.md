@@ -1,3 +1,9 @@
+## v1.0.1 (2025-05-17)
+
+### Pull Requests
+[#7](https://github.com/RafaelMoro/ai-launch-business/pull/7) | Fix eslint issues
+
+
 ## v1.0.0 (2025-05-17)
 
 ### Pull Requests
