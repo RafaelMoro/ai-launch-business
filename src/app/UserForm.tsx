@@ -12,11 +12,12 @@ import { addToLocalStorage } from "./utils/addInfoLocalStorage"
 interface UserFormProps {
   addBusinessPlan: (data: GetBusinessPlanData) => void;
   businessIdea: string;
+  businessPlan: GetBusinessPlanData | null;
   updateBusinessIdea: (idea: string) => void
   resetBusinessIdea: () => void
 }
 
-export default function UserForm({ businessIdea, addBusinessPlan, resetBusinessIdea, updateBusinessIdea }: UserFormProps) {
+export default function UserForm({ businessIdea, addBusinessPlan, resetBusinessIdea, updateBusinessIdea, businessPlan }: UserFormProps) {
   const { mutate: getBusinessPlan, isError, isPending, isSuccess, isIdle } = useMutation({
     mutationFn: () => {
       const data = { businessIdea }
@@ -64,7 +65,7 @@ export default function UserForm({ businessIdea, addBusinessPlan, resetBusinessI
 
         <div className="w-full flex justify-center">
           <button
-            disabled={isPending || isSuccess}
+            disabled={isPending || isSuccess || Boolean(businessPlan)}
             type="submit"
             className={buttonCssClasses}
             >

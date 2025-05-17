@@ -92,6 +92,7 @@ export default function Home() {
           businessIdea={businessIdea}
           updateBusinessIdea={updateBusinessIdea}
           resetBusinessIdea={resetBusinessIdea}
+          businessPlan={businessPlan}
           />
         { businessPlan && (
           <ShowBusinessPlan businessPlan={businessPlan} />
