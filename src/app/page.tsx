@@ -39,7 +39,6 @@ export default function Home() {
   const addLatitude = (lat: number) => setLatitude(lat);
   const addLongitude = (long: number) => setLongitude(long);
   const updateBusinessIdea = (idea: string) => setBusinessIdea(idea);
-  const resetBusinessIdea = () => setBusinessIdea("");
   const addCompetitors = (data: Competitors[]) => setCompetitors(data);
 
   const resetAllData = () => {
@@ -104,7 +103,6 @@ export default function Home() {
           addBusinessPlan={addBusinessPlan}
           businessIdea={businessIdea}
           updateBusinessIdea={updateBusinessIdea}
-          resetBusinessIdea={resetBusinessIdea}
           businessPlan={businessPlan}
           resetAllData={resetAllData}
           />

@@ -15,14 +15,12 @@ interface UserFormProps {
   businessIdea: string;
   businessPlan: GetBusinessPlanData | null;
   updateBusinessIdea: (idea: string) => void;
-  resetBusinessIdea: () => void;
   resetAllData: () => void;
 }
 
 export default function UserForm({ 
   businessIdea, 
   addBusinessPlan, 
-  resetBusinessIdea, 
   updateBusinessIdea, 
   businessPlan,
   resetAllData 
