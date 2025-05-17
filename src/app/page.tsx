@@ -63,17 +63,20 @@ export default function Home() {
     }
 
     const {
-      geoLocationCoords: { latitude, longitude },
+      geoLocationCoords = { latitude: null, longitude: null },
       businessPlan,
       businessIdea,
       geoLocationInfo,
       competitors,
       buyerPersonas,
     } = localStorageInfo;
-    if (latitude && longitude) {
-      addLatitude(Number(latitude))
-      addLongitude(Number(longitude))
+
+    // Check if geoLocationCoords exists and has valid values
+    if (geoLocationCoords?.latitude && geoLocationCoords?.longitude) {
+      addLatitude(Number(geoLocationCoords.latitude))
+      addLongitude(Number(geoLocationCoords.longitude))
     }
+
     if (businessPlan) {
       addBusinessPlan(businessPlan)
     }
