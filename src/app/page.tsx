@@ -109,7 +109,7 @@ export default function Home() {
           resetAllData={resetAllData}
           />
         { businessPlan && (
-          <ShowBusinessPlan businessPlan={businessPlan} />
+          <ShowBusinessPlan businessPlan={businessPlan} businessIdea={businessIdea} />
         )}
         { businessPlan && (
           <CompetitorsInfo
